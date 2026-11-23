@@ -20,7 +20,7 @@ const COMPILER_COMMANDS = [
 
 /**
  * точка входа расширения Вызывается VS Code при активации плагина
- * @param {vscode.ExtensionContext} context Контекст жизненного цикла расширения.
+ * @param {vscode.ExtensionContext} context контекст жизненного цикла расширения
  */
 function activate(context) {
     const soundsDir = path.join(context.extensionPath, 'sounds');
@@ -39,15 +39,13 @@ function activate(context) {
 
     const terminalListener = vscode.window.onDidEndTerminalShellExecution((event) => {
         const commandLine = event.execution.commandLine.value.trim();
-        if (!commandLine) {
-            return;
-        }
 
-        const firstWord = commandLine.split(/\s+/)[0];
-        const executable = path.basename(firstWord);
-
-        if (!COMPILER_COMMANDS.includes(executable)) {
-            return;
+        if (commandLine) {
+            const firstWord = commandLine.split(/\s+/)[0];
+            const executable = path.basename(firstWord);
+            if (!COMPILER_COMMANDS.includes(executable)) {
+                return;
+            }
         }
 
         if (event.exitCode === 0) {
@@ -61,7 +59,7 @@ function activate(context) {
 }
 
 /**
- * Вызывается VS Code при деактивации расширения.
+ * вызывается VS Code при деактивации расширения
  */
 function deactivate() {}
 
